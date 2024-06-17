@@ -54,7 +54,7 @@ function App() {
 
   const fetchWeatherData = async (query) => {
     try {
-      const apiKey = '38601189836e0085ca33e0e0d3834c37';
+      const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric`;
       const response = await fetch(apiUrl);
       const data = await response.json();
@@ -66,7 +66,7 @@ function App() {
 
   const fetchWeatherDataByLocation = async (lat, lon) => {
     try {
-      const apiKey = '38601189836e0085ca33e0e0d3834c37';
+      const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
       const response = await fetch(apiUrl);
       const data = await response.json();
