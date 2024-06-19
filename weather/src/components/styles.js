@@ -51,9 +51,17 @@ export const Temp = styled.div`
   margin-bottom: 10px;
 `;
 
+export const DateAndTimeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
 export const DateAndTime = styled.div`
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  margin: 5px 10px;
 `;
 
 export const SearchForm = styled.form`
@@ -64,7 +72,7 @@ export const SearchForm = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, ${(props) => (props.theme.mode === 'light' ? '0.8' : '0.6')});
   border-radius: 80px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 5px;
@@ -90,9 +98,9 @@ export const SearchButton = styled.button`
 `;
 
 export const ToggleButton = styled.button`
-   position: absolute;
+  position: absolute;
   top: 40px;
-  right: 30px; /* Align to the right */
+  right: 30px;
   padding: 8px 16px;
   font-size: 16px;
   border: none;
@@ -104,5 +112,7 @@ export const ToggleButton = styled.button`
 `;
 
 export const WeatherDetails = styled.div`
-  /* Styles for WeatherDetails */
+  margin-top: 10px;
+  text-align: left;
 `;
+

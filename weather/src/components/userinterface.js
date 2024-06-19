@@ -104,8 +104,8 @@ function App() {
             <Header>{weatherData.name}</Header>
             <MainInfo>
               <Temp>{Math.round(weatherData.main.temp)}°C</Temp>
-              <DateAndTime>{currentTime.toLocaleTimeString()}</DateAndTime>
-              <DateAndTime>{currentTime.toLocaleDateString()}</DateAndTime>
+              <DateAndTime>Time: {currentTime.toLocaleTimeString()}</DateAndTime>
+              <DateAndTime>Date: {currentTime.toLocaleDateString()}</DateAndTime>
             </MainInfo>
             <WeatherDetails>
               <p>Humidity: {weatherData.main.humidity}%</p>
