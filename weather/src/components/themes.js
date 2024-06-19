@@ -1,14 +1,22 @@
 
 export const lightTheme = {
-  body: '#ffffff',
+  body: '#FFFFFF',
   text: '#000000',
-  cardBackground: 'rgba(255, 255, 255, 0)', // Higher transparency for light mode
-  mode: 'light',
+  cardBackground: '#F3F3F3',
+  buttonBackground: '#4caf50',
+  buttonText: '#FFFFFF',
+  searchBackground: '#FFFFFF',
+  searchText: '#000000',
+  border: 'none',
 };
 
 export const darkTheme = {
-  body: '#000000',
-  text: '#ffffff',
-  cardBackground: 'rgba(0, 0, 0, 0.7)', // Lower transparency for dark mode
-  mode: 'dark',
+  body: '#333333',
+  text: '#FFFFFF',
+  cardBackground: '#444444',
+  buttonBackground: '#555555',
+  buttonText: '#FFFFFF',
+  searchBackground: '#555555',
+  searchText: '#FFFFFF',
+  border: 'solid 2px #FFFFFF', // Define a solid border for dark theme
 };

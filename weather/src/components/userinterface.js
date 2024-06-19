@@ -4,6 +4,7 @@ import img from '../image/i.jpg'; // Replace with your actual image path
 import { lightTheme, darkTheme } from './themes';
 import {
   Container,
+  Overlay,
   WeatherCard,
   Header,
   MainInfo,
@@ -13,7 +14,7 @@ import {
   SearchInput,
   SearchButton,
   ToggleButton,
-  WeatherDetails, // Import new styled component for weather details
+  WeatherDetails,
 } from './styles'; // Import the styled components
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [location, setLocation] = useState({ lat: null, lon: null });
   const [theme, setTheme] = useState('light');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,24 +56,34 @@ function App() {
 
   const fetchWeatherData = async (query) => {
     try {
-      const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
+      const apiKey = '38601189836e0085ca33e0e0d3834c37';
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric`;
       const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error('Location not found');
+      }
       const data = await response.json();
       setWeatherData(data);
+      setError(null); // Reset the error message if data is found
     } catch (error) {
+      setError('Please provide a correct city name or zipcode.');
       console.error('Error fetching weather data:', error);
     }
   };
 
   const fetchWeatherDataByLocation = async (lat, lon) => {
     try {
-      const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
+      const apiKey = '38601189836e0085ca33e0e0d3834c37';
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
       const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error('Location not found');
+      }
       const data = await response.json();
       setWeatherData(data);
+      setError(null); // Reset the error message if data is found
     } catch (error) {
+      setError('Please provide a correct city name or zipcode.');
       console.error('Error fetching weather data:', error);
     }
   };
@@ -92,6 +104,7 @@ function App() {
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <Container img={img}>
+        <Overlay theme={theme} />
         <ToggleButton onClick={toggleTheme}>
           {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
         </ToggleButton>
@@ -99,6 +112,7 @@ function App() {
           <SearchInput type="text" placeholder="Enter city or zip code" value={inputValue} onChange={handleInputChange} />
           <SearchButton type="submit">Search</SearchButton>
         </SearchForm>
+        {error && <p>{error}</p>}
         {weatherData && (
           <WeatherCard>
             <Header>{weatherData.name}</Header>

@@ -1,10 +1,10 @@
 
 import './App.css';
-import User from './components/userinterface'
+import Weather from './components/userinterface'
 function App() {
   return (
     <div className="App">      
-      <User/>
+      <Weather/>
     </div>
   );
 }
