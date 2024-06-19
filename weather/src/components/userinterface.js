@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import img from '../image/i.jpg'; // Replace with your actual image path
@@ -25,6 +26,7 @@ function App() {
   const [theme, setTheme] = useState('light');
   const [error, setError] = useState(null);
 
+  // Update current time every second
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
@@ -32,6 +34,7 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
+  // Get user's current location
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -43,17 +46,22 @@ function App() {
         },
         (error) => {
           console.error('Error getting location:', error);
+          setError('Unable to retrieve your location. Please enter a city or zip code.');
         }
       );
+    } else {
+      setError('Geolocation is not supported by this browser.');
     }
   }, []);
 
+  // Fetch weather data based on user's current location
   useEffect(() => {
     if (location.lat && location.lon) {
       fetchWeatherDataByLocation(location.lat, location.lon);
     }
   }, [location]);
 
+  // Fetch weather data by city name or zip code
   const fetchWeatherData = async (query) => {
     try {
       const apiKey = process.env.REACT_APP_API_KEY;
@@ -66,11 +74,12 @@ function App() {
       setWeatherData(data);
       setError(null); // Reset the error message if data is found
     } catch (error) {
-      setError('Please provide a correct city name or zipcode.');
+      setError('Please provide a correct city name or zip code.');
       console.error('Error fetching weather data:', error);
     }
   };
 
+  // Fetch weather data by geographic coordinates
   const fetchWeatherDataByLocation = async (lat, lon) => {
     try {
       const apiKey = process.env.REACT_APP_API_KEY;
@@ -83,20 +92,23 @@ function App() {
       setWeatherData(data);
       setError(null); // Reset the error message if data is found
     } catch (error) {
-      setError('Please provide a correct city name or zipcode.');
+      setError('Unable to retrieve weather data for your location.');
       console.error('Error fetching weather data:', error);
     }
   };
 
+  // Handle input change in the search bar
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
+  // Handle form submission for the search
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWeatherData(inputValue);
   };
 
+  // Toggle between light and dark themes
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
@@ -109,7 +121,12 @@ function App() {
           {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
         </ToggleButton>
         <SearchForm onSubmit={handleSubmit}>
-          <SearchInput type="text" placeholder="Enter city or zip code" value={inputValue} onChange={handleInputChange} />
+          <SearchInput
+            type="text"
+            placeholder="Enter city or zip code"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
           <SearchButton type="submit">Search</SearchButton>
         </SearchForm>
         {error && <p>{error}</p>}
